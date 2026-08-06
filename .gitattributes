@@ -1,0 +1,13 @@
+# Normalize line endings on checkout / commit
+* text=auto eol=lf
+
+# Shell scripts: always LF, executable bit preserved
+*.sh text eol=lf
+*.service text eol=lf
+*.timer text eol=lf
+
+# Markdown: LF
+*.md text eol=lf
+
+# Mermaid is part of markdown, keep LF
+*.mmd text eol=lf

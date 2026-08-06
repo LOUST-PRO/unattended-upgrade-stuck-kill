@@ -1,0 +1,25 @@
+[Unit]
+Description=unattended-upgrade-stuck-kill — kill stuck unattended-upgrade processes
+Documentation=file:///usr/local/bin/unattended-upgrade-stuck-kill.sh
+After=apt-daily-upgrade.service
+ConditionPathExists=/usr/local/bin/unattended-upgrade-stuck-kill.sh
+
+[Service]
+Type=oneshot
+# Run as root: kill requires CAP_KILL, dpkg recovery requires root
+User=root
+ExecStart=/usr/local/bin/unattended-upgrade-stuck-kill.sh
+# Capture stdout/stderr to log file (additional to script's own log)
+StandardOutput=file:/var/log/unattended-upgrade-stuck-kill/service.log
+StandardError=file:/var/log/unattended-upgrade-stuck-kill/service.err
+SuccessExitStatus=0 1
+TimeoutStartSec=10min
+NoNewPrivileges=true
+ProtectSystem=strict
+ProtectHome=read-only
+# Needed for script's own writes (log file, rate-limit stamp)
+ReadWritePaths=/var/log/unattended-upgrade-stuck-kill /var/lib/dpkg /var/lib/apt /var/cache/apt
+PrivateTmp=false
+
+[Install]
+WantedBy=multi-user.target

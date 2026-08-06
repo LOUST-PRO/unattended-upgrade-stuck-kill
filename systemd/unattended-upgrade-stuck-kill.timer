@@ -1,0 +1,19 @@
+[Unit]
+Description=unattended-upgrade-stuck-kill — daily 05:10 (10 min after apt-daily-upgrade)
+Documentation=file:///usr/local/bin/unattended-upgrade-stuck-kill.sh
+# apt-daily-upgrade.timer typically runs ~04:55-05:05. We trigger 10 min
+# after expected completion to catch processes that started but never
+# finished (the typical "stuck" pattern).
+
+[Timer]
+# Runs daily at 05:10. The OnCalendar is fixed; tweak if your
+# apt-daily-upgrade.timer runs at a different time.
+OnCalendar=*-*-* 05:10:00
+# Persistent=true ensures catch-up runs if the system was asleep/powered
+# off at the scheduled time.
+Persistent=true
+AccuracySec=1min
+Unit=unattended-upgrade-stuck-kill.service
+
+[Install]
+WantedBy=timers.target

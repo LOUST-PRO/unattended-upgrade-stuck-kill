@@ -1,0 +1,21 @@
+# OS / editor cruft
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.vscode/
+.idea/
+
+# Local overrides (operators can drop these without polluting git)
+*.local
+
+# Test artifacts (the smoke tests create tmp files in /tmp and
+# log to $XDG_STATE_HOME, so nothing should leak into the repo,
+# but defensively exclude any pattern that might emerge)
+test-results/
+coverage/
+
+# Build artifacts (none currently, but defensive)
+*.tar.gz
+*.tgz
